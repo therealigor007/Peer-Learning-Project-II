@@ -1,0 +1,109 @@
+# Anonymous Reviews Project - .gitignore
+
+# ===== SECURITY - NEVER COMMIT THESE =====
+.env
+.env.local
+.env.azure
+*.env
+config.ini
+secrets.json
+
+# Database credentials and connection strings
+database_config.py
+db_credentials.*
+
+# ===== PYTHON =====
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.ENV/
+
+# ===== DATA FILES =====
+# Local JSON storage (backup data)
+data/
+*.json
+*.db
+*.sqlite
+*.sqlite3
+
+# Log files
+*.log
+logs/
+log/
+
+# ===== DEVELOPMENT =====
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ===== OPERATING SYSTEM =====
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# ===== PROJECT SPECIFIC =====
+# Test files (optional - you might want to keep these)
+test_connection.py
+test_simple.py
+temp_*.py
+
+# Documentation drafts
+draft_*.md
+notes.txt
+scratch.py
+
+# Azure related (if you download any certificates)
+*.pem
+*.key
+*.crt
+
+# ===== TEMPORARY FILES =====
+*.tmp
+*.temp
+temp/
+tmp/
