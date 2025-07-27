@@ -1,14 +1,9 @@
-"""
-Review Business Logic Service
-Member 3: Storage & Business Logic
-"""
-
 from models.review import Review
 from services.azure_storage_service import AzureStorageService
 from services.validation_service import ValidationService
 
 class ReviewService:
-    def _init_(self):
+    def __init__(self):  # Fixed: was _init_
         """Initialize review service"""
         self.storage = AzureStorageService()
         self.validator = ValidationService()
@@ -87,18 +82,64 @@ class ReviewService:
             print(f"Error recording vote: {e}")
             return False
     
-    def get_popular_items(self, limit=5):
-        """Get most reviewed items"""
+    def get_reviews_by_item(self, item_name):
+        """Get all reviews for a specific item"""
+        all_reviews = self.get_all_reviews()
+        return [review for review in all_reviews 
+                if review.item_name.lower() == item_name.lower()]
+    
+    def search_reviews(self, search_term, category_id=None):
+        """Search reviews by content or item name"""
+        all_reviews = self.get_all_reviews()
+        search_term = search_term.lower()
+        
+        results = []
+        for review in all_reviews:
+            if category_id and review.category_id != category_id:
+                continue
+            
+            if (search_term in review.item_name.lower() or 
+                search_term in review.content.lower()):
+                results.append(review)
+        
+        return results
+    
+    def get_item_statistics(self, item_name):
+        """Get statistics for a specific item"""
+        reviews = self.get_reviews_by_item(item_name)
+        
+        if not reviews:
+            return {"item_name": item_name, "total_reviews": 0}
+        
+        ratings = [review.rating for review in reviews]
+        
+        import statistics
+        return {
+            "item_name": item_name,
+            "total_reviews": len(reviews),
+            "average_rating": round(statistics.mean(ratings), 1),
+            "rating_distribution": {i: ratings.count(i) for i in range(1, 6)},
+            "total_helpful_votes": sum(review.helpful_votes for review in reviews)
+        }
+    
+    def get_popular_items(self, category_id=None, limit=5):
+        """Get most reviewed items with statistics"""
         all_reviews = self.get_all_reviews()
         
-        # Count reviews per item
-        item_counts = {}
-        for review in all_reviews:
-            if review.item_name in item_counts:
-                item_counts[review.item_name] += 1
-            else:
-                item_counts[review.item_name] = 1
+        if category_id:
+            all_reviews = [r for r in all_reviews if r.category_id == category_id]
         
-        # Sort by count and return top items
-        sorted_items = sorted(item_counts.items(), key=lambda x: x[1], reverse=True)
-        return sorted_items[:limit]
+        # Count reviews per item
+        from collections import defaultdict
+        item_counts = defaultdict(int)
+        for review in all_reviews:
+            item_counts[review.item_name] += 1
+        
+        # Sort by review count and get statistics
+        popular_items = []
+        for item_name, count in sorted(item_counts.items(), 
+                                     key=lambda x: x[1], reverse=True)[:limit]:
+            stats = self.get_item_statistics(item_name)
+            popular_items.append(stats)
+        
+        return popular_items

@@ -1,12 +1,7 @@
-"""
-Input Validation Service
-Member 3: Storage & Business Logic
-"""
-
 from config.settings import Settings
 
 class ValidationService:
-    def _init_(self):
+    def __init__(self):  # Fixed: was _init_
         """Initialize validation service"""
         self.settings = Settings()
     

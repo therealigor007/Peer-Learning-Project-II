@@ -1,8 +1,3 @@
-"""
-Application Settings and Configuration
-Member 2: Data Models
-"""
-
 class Settings:
     # Review validation rules
     MAX_REVIEW_LENGTH = 500
