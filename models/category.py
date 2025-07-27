@@ -1,10 +1,5 @@
-"""
-Category Data Model
-Member 2: Data Models
-"""
-
 class Category:
-    def _init_(self, id, name, description=""):
+    def __init__(self, id, name, description=""):
         """Create a new category"""
         self.id = id
         self.name = name
@@ -27,6 +22,6 @@ class Category:
             description=data.get("description", "")
         )
     
-    def _str_(self):
+    def __str__(self):
         """String representation for debugging"""
         return f"{self.name}: {self.description}"

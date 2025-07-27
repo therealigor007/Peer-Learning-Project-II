@@ -1,3 +1,4 @@
+# filepath: services/azure_storage_service.py
 """
 Azure SQL Database Storage Service
 Member 3: Storage & Business Logic
@@ -12,7 +13,7 @@ from models.category import Category
 load_dotenv()
 
 class AzureStorageService:
-    def _init_(self):
+    def __init__(self):  # Fixed: was _init_
         """Initialize Azure storage service"""
         self.server = os.getenv('AZURE_SQL_SERVER')
         self.database = os.getenv('AZURE_SQL_DATABASE')
@@ -91,7 +92,8 @@ class AzureStorageService:
                     "content": row[4],
                     "anonymous_id": row[5],
                     "timestamp": row[6].isoformat() if hasattr(row[6], 'isoformat') else str(row[6]),
-                    "helpful_votes": row[7] or 0
+                    "helpful_votes": row[7] or 0,
+                    "flagged": False  # Add flagged field for compatibility
                 }
                 reviews.append(Review.from_dict(review_data))
             
