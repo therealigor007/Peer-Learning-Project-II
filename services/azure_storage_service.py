@@ -1,9 +1,3 @@
-# filepath: services/azure_storage_service.py
-"""
-Azure SQL Database Storage Service
-Member 3: Storage & Business Logic
-"""
-
 import pymssql
 import os
 from dotenv import load_dotenv

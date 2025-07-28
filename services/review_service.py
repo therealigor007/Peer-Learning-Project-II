@@ -3,7 +3,7 @@ from services.azure_storage_service import AzureStorageService
 from services.validation_service import ValidationService
 
 class ReviewService:
-    def __init__(self):  # Fixed: was _init_
+    def __init__(self): 
         """Initialize review service"""
         self.storage = AzureStorageService()
         self.validator = ValidationService()

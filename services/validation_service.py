@@ -1,7 +1,7 @@
 from config.settings import Settings
 
 class ValidationService:
-    def __init__(self):  # Fixed: was _init_
+    def __init__(self):
         """Initialize validation service"""
         self.settings = Settings()
     
